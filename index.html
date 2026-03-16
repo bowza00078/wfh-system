@@ -90,7 +90,7 @@
     </main>
 
     <script>
-        // จำลองนาฬิกาเดินแบบ Real-time
+        // 1. จำลองนาฬิกาเดินแบบ Real-time
         function updateTime() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('th-TH', { hour12: false });
@@ -99,12 +99,73 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        // จำลองการดึง GPS (หน่วงเวลา 1.5 วินาทีให้ดูเหมือนกำลังโหลด)
+        // 2. จำลองการดึง GPS (หน่วงเวลา 1.5 วินาที)
         setTimeout(() => {
             document.getElementById('gps-status').innerHTML = 'บันทึกพิกัดสำเร็จ: <strong>16.8211° N, 100.2659° E</strong>';
             document.getElementById('gps-status').parentElement.classList.replace('bg-blue-50', 'bg-emerald-50');
             document.getElementById('gps-status').parentElement.classList.replace('text-blue-800', 'text-emerald-800');
         }, 1500);
+
+        // 3. ฟังก์ชันสำหรับส่งข้อมูลเมื่อกดปุ่ม Check-in
+        function submitCheckIn() {
+            // *** นำ Web App URL ที่ได้จาก Google Apps Script มาวางในเครื่องหมายคำพูดด้านล่างนี้ ***
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwVnEeGVi9TI7c7t6AGAQJX-ogduVTKWFBhBAHYE8NT-KF_izbAVyGO86Df_9j79PU6/exec';
+            
+            // รวบรวมข้อมูลจากฟอร์ม
+            const workLocationInput = document.querySelector('input[name="work_location"]:checked');
+            const workLocation = workLocationInput ? workLocationInput.nextElementSibling.innerText.trim() : "";
+            
+            const taskDetail = document.querySelector('textarea').value;
+            const gpsData = document.getElementById('gps-status').innerText;
+            
+            // ตรวจสอบว่ากรอกข้อมูลครบไหม
+            if(!taskDetail) {
+                alert("กรุณาระบุรายละเอียดงานหรือภารกิจก่อนลงชื่อครับ");
+                return;
+            }
+
+            // เปลี่ยนปุ่มเป็นสถานะกำลังโหลด
+            const btn = document.querySelector('button.bg-emerald-500');
+            const originalText = btn.innerText;
+            btn.innerText = "กำลังบันทึก...";
+            btn.disabled = true;
+
+            // จัดเตรียมข้อมูลเพื่อส่งไปหลังบ้าน
+            const data = {
+                name: "ทดสอบ ระบบ", // ชื่อชั่วคราวสำหรับทดสอบ
+                location: workLocation,
+                task: taskDetail,
+                gps: gpsData
+            };
+
+            // ส่งข้อมูลด้วย Fetch API
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                alert("บันทึกการลงชื่อเข้าปฏิบัติงานเรียบร้อยแล้ว!");
+                btn.innerText = originalText;
+                btn.disabled = false;
+                document.querySelector('textarea').value = ''; // เคลียร์กล่องข้อความ
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
+                btn.innerText = originalText;
+                btn.disabled = false;
+            });
+        }
+
+        // 4. ผูกฟังก์ชันเข้ากับปุ่ม "เข้างาน (Check-in)"
+        const checkInBtn = document.querySelector('button.bg-emerald-500');
+        if(checkInBtn) {
+            checkInBtn.addEventListener('click', submitCheckIn);
+        }
     </script>
 </body>
 </html>

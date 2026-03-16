@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบลงชื่อปฏิบัติงานออนไลน์</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Prompt', 'sans-serif'] },
+                    colors: {
+                        navy: '#1e3a8a', // สีน้ำเงินกรมท่า
+                        primary: '#2563eb', // สีน้ำเงินหลัก
+                        bglight: '#f3f4f6', // สีพื้นหลังเทาอ่อน
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bglight font-sans text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <header class="bg-navy text-white shadow-md">
+        <div class="max-w-md mx-auto w-full px-4 py-3 flex justify-between items-center">
+            <h1 class="font-semibold text-lg">ลงชื่อปฏิบัติงาน</h1>
+            <div class="w-8 h-8 bg-gray-300 rounded-full border-2 border-white overflow-hidden">
+                <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-md mx-auto w-full p-4 flex flex-col gap-4">
+        
+        <div class="text-center py-2">
+            <p id="current-date" class="text-gray-500 text-sm">วันจันทร์ที่ 16 มีนาคม 2569</p>
+            <h2 id="current-time" class="text-4xl font-bold text-navy mt-1 tracking-wider">14:24:44</h2>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-5">
+            <form action="#" method="POST" class="flex flex-col gap-5">
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">สถานที่ปฏิบัติงาน <span class="text-red-500">*</span></label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer hover:bg-blue-50 transition peer-checked:border-primary peer-checked:bg-blue-50">
+                            <input type="radio" name="work_location" value="wfh" class="w-4 h-4 text-primary focus:ring-primary" checked>
+                            <span class="text-sm font-medium">บ้าน (WFH)</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer hover:bg-blue-50 transition">
+                            <input type="radio" name="work_location" value="fieldwork" class="w-4 h-4 text-primary focus:ring-primary">
+                            <span class="text-sm font-medium">ออกปฏิบัติราชการ</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">รายละเอียดงาน / ภารกิจ <span class="text-red-500">*</span></label>
+                    <textarea rows="3" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" placeholder="ระบุรายละเอียดงาน เช่น เตรียมแผนการสอน, เป็นที่ปรึกษาโครงงานนักเรียน, หรือจัดการเรียนการสอนออนไลน์..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">รูปภาพหลักฐาน (ถ้ามี)</label>
+                    <label class="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg class="w-6 h-6 text-gray-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <p class="text-xs text-gray-500">คลิกเพื่อถ่ายรูป หรืออัปโหลดไฟล์</p>
+                        </div>
+                        <input type="file" class="hidden" accept="image/*" capture="camera" />
+                    </label>
+                </div>
+
+                <div class="bg-blue-50 text-blue-800 text-xs p-3 rounded-xl flex items-center gap-2">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span id="gps-status">กำลังดึงพิกัดตำแหน่งของคุณ...</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 mt-2">
+                    <button type="button" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-3 rounded-xl shadow-md transition focus:ring-4 focus:ring-emerald-200">
+                        เข้างาน (Check-in)
+                    </button>
+                    <button type="button" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-medium py-3 rounded-xl shadow-md transition focus:ring-4 focus:ring-rose-200">
+                        ออกงาน (Check-out)
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // จำลองนาฬิกาเดินแบบ Real-time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('th-TH', { hour12: false });
+            document.getElementById('current-time').innerText = timeString;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // จำลองการดึง GPS (หน่วงเวลา 1.5 วินาทีให้ดูเหมือนกำลังโหลด)
+        setTimeout(() => {
+            document.getElementById('gps-status').innerHTML = 'บันทึกพิกัดสำเร็จ: <strong>16.8211° N, 100.2659° E</strong>';
+            document.getElementById('gps-status').parentElement.classList.replace('bg-blue-50', 'bg-emerald-50');
+            document.getElementById('gps-status').parentElement.classList.replace('text-blue-800', 'text-emerald-800');
+        }, 1500);
+    </script>
+</body>
+</html>

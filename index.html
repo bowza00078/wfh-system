@@ -128,7 +128,7 @@
 
         // 3. ฟังก์ชันสำหรับส่งข้อมูลเมื่อกดปุ่ม Check-in
         function submitCheckIn() {
-            // *** นำ Web App URL ที่ได้จาก Google Apps Script มาวางในเครื่องหมายคำพูดด้านล่างนี้ ***
+            // ลิงก์ Web App URL ของคุณ
             const scriptURL = 'https://script.google.com/macros/s/AKfycbym1mCvnFPU3ltktr5ee3rxoTMsXIFe62W2BIJTHGa9pJnTbbvq1k0ED5lSNSbZXfHE/exec';
             
             // รวบรวมข้อมูลจากฟอร์ม
@@ -149,10 +149,6 @@
                 document.getElementById('task-detail').focus();
                 return;
             }
-            if(scriptURL === 'https://script.google.com/macros/s/AKfycbym1mCvnFPU3ltktr5ee3rxoTMsXIFe62W2BIJTHGa9pJnTbbvq1k0ED5lSNSbZXfHE/exec') {
-                alert("คุณยังไม่ได้ใส่ลิงก์ Web App URL ในโค้ดนะคะ กรุณาอัปเดตโค้ดก่อนทดสอบส่งข้อมูลค่ะ");
-                return;
-            }
 
             // เปลี่ยนปุ่มเป็นสถานะกำลังโหลด
             const btn = document.getElementById('btn-checkin');
@@ -162,7 +158,7 @@
 
             // จัดเตรียมข้อมูลเพื่อส่งไปหลังบ้าน
             const data = {
-                name: userName, // ส่งชื่อที่พิมพ์เข้ามา
+                name: userName, 
                 location: workLocation,
                 task: taskDetail,
                 gps: gpsData

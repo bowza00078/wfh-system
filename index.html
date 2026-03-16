@@ -12,9 +12,9 @@
                 extend: {
                     fontFamily: { sans: ['Prompt', 'sans-serif'] },
                     colors: {
-                        navy: '#1e3a8a', // สีน้ำเงินกรมท่า
-                        primary: '#2563eb', // สีน้ำเงินหลัก
-                        bglight: '#f3f4f6', // สีพื้นหลังเทาอ่อน
+                        navy: '#1e3a8a', 
+                        primary: '#2563eb', 
+                        bglight: '#f3f4f6', 
                     }
                 }
             }
@@ -35,13 +35,18 @@
     <main class="flex-1 max-w-md mx-auto w-full p-4 flex flex-col gap-4">
         
         <div class="text-center py-2">
-            <p id="current-date" class="text-gray-500 text-sm">วันจันทร์ที่ 16 มีนาคม 2569</p>
-            <h2 id="current-time" class="text-4xl font-bold text-navy mt-1 tracking-wider">14:24:44</h2>
+            <p id="current-date" class="text-gray-500 text-sm">กำลังโหลดวันที่...</p>
+            <h2 id="current-time" class="text-4xl font-bold text-navy mt-1 tracking-wider">00:00:00</h2>
         </div>
 
         <div class="bg-white rounded-2xl shadow-lg p-5">
-            <form action="#" method="POST" class="flex flex-col gap-5">
+            <form id="checkin-form" class="flex flex-col gap-5">
                 
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ชื่อ-นามสกุล <span class="text-red-500">*</span></label>
+                    <input type="text" id="user-name" required class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" placeholder="เช่น นายสมชาย ใจดี">
+                </div>
+
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">สถานที่ปฏิบัติงาน <span class="text-red-500">*</span></label>
                     <div class="grid grid-cols-2 gap-3">
@@ -58,14 +63,14 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">รายละเอียดงาน / ภารกิจ <span class="text-red-500">*</span></label>
-                    <textarea rows="3" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" placeholder="ระบุรายละเอียดงาน เช่น เตรียมแผนการสอน, เป็นที่ปรึกษาโครงงานนักเรียน, หรือจัดการเรียนการสอนออนไลน์..."></textarea>
+                    <textarea id="task-detail" rows="3" required class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" placeholder="ระบุรายละเอียดงาน..."></textarea>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">รูปภาพหลักฐาน (ถ้ามี)</label>
                     <label class="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg class="w-6 h-6 text-gray-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                             <p class="text-xs text-gray-500">คลิกเพื่อถ่ายรูป หรืออัปโหลดไฟล์</p>
                         </div>
                         <input type="file" class="hidden" accept="image/*" capture="camera" />
@@ -78,7 +83,7 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-3 mt-2">
-                    <button type="button" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-3 rounded-xl shadow-md transition focus:ring-4 focus:ring-emerald-200">
+                    <button type="button" id="btn-checkin" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-3 rounded-xl shadow-md transition focus:ring-4 focus:ring-emerald-200">
                         เข้างาน (Check-in)
                     </button>
                     <button type="button" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-medium py-3 rounded-xl shadow-md transition focus:ring-4 focus:ring-rose-200">
@@ -90,55 +95,80 @@
     </main>
 
     <script>
-        // 1. จำลองนาฬิกาเดินแบบ Real-time
+        // 1. แสดงวันที่และนาฬิกา Real-time
+        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('th-TH', dateOptions);
+
         function updateTime() {
             const now = new Date();
-            const timeString = now.toLocaleTimeString('th-TH', { hour12: false });
-            document.getElementById('current-time').innerText = timeString;
+            document.getElementById('current-time').innerText = now.toLocaleTimeString('th-TH', { hour12: false });
         }
         setInterval(updateTime, 1000);
         updateTime();
 
-        // 2. จำลองการดึง GPS (หน่วงเวลา 1.5 วินาที)
-        setTimeout(() => {
-            document.getElementById('gps-status').innerHTML = 'บันทึกพิกัดสำเร็จ: <strong>16.8211° N, 100.2659° E</strong>';
-            document.getElementById('gps-status').parentElement.classList.replace('bg-blue-50', 'bg-emerald-50');
-            document.getElementById('gps-status').parentElement.classList.replace('text-blue-800', 'text-emerald-800');
-        }, 1500);
+        // 2. ดึงพิกัดตำแหน่งของจริง (Geolocation API)
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude.toFixed(4);
+                    const lng = position.coords.longitude.toFixed(4);
+                    document.getElementById('gps-status').innerHTML = `พิกัดปัจจุบัน: <strong>${lat}° N, ${lng}° E</strong>`;
+                    document.getElementById('gps-status').parentElement.classList.replace('bg-blue-50', 'bg-emerald-50');
+                    document.getElementById('gps-status').parentElement.classList.replace('text-blue-800', 'text-emerald-800');
+                },
+                (error) => {
+                    document.getElementById('gps-status').innerText = 'ไม่สามารถดึงพิกัดได้ (กรุณาเปิด GPS)';
+                    document.getElementById('gps-status').parentElement.classList.replace('bg-blue-50', 'bg-rose-50');
+                    document.getElementById('gps-status').parentElement.classList.replace('text-blue-800', 'text-rose-800');
+                }
+            );
+        } else {
+            document.getElementById('gps-status').innerText = 'เบราว์เซอร์ของคุณไม่รองรับ GPS';
+        }
 
         // 3. ฟังก์ชันสำหรับส่งข้อมูลเมื่อกดปุ่ม Check-in
         function submitCheckIn() {
             // *** นำ Web App URL ที่ได้จาก Google Apps Script มาวางในเครื่องหมายคำพูดด้านล่างนี้ ***
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwVnEeGVi9TI7c7t6AGAQJX-ogduVTKWFBhBAHYE8NT-KF_izbAVyGO86Df_9j79PU6/exec';
+            const scriptURL = 'วาง_WEB_APP_URL_ของคุณที่นี่';
             
             // รวบรวมข้อมูลจากฟอร์ม
+            const userName = document.getElementById('user-name').value.trim();
             const workLocationInput = document.querySelector('input[name="work_location"]:checked');
             const workLocation = workLocationInput ? workLocationInput.nextElementSibling.innerText.trim() : "";
-            
-            const taskDetail = document.querySelector('textarea').value;
+            const taskDetail = document.getElementById('task-detail').value.trim();
             const gpsData = document.getElementById('gps-status').innerText;
             
-            // ตรวจสอบว่ากรอกข้อมูลครบไหม
+            // ตรวจสอบความถูกต้อง (Validation)
+            if(!userName) {
+                alert("กรุณาระบุชื่อ-นามสกุลก่อนลงชื่อค่ะ");
+                document.getElementById('user-name').focus();
+                return;
+            }
             if(!taskDetail) {
-                alert("กรุณาระบุรายละเอียดงานหรือภารกิจก่อนลงชื่อครับ");
+                alert("กรุณาระบุรายละเอียดงานหรือภารกิจด้วยค่ะ");
+                document.getElementById('task-detail').focus();
+                return;
+            }
+            if(scriptURL === 'https://script.google.com/macros/s/AKfycbwVnEeGVi9TI7c7t6AGAQJX-ogduVTKWFBhBAHYE8NT-KF_izbAVyGO86Df_9j79PU6/exec') {
+                alert("คุณยังไม่ได้ใส่ลิงก์ Web App URL ในโค้ดนะคะ กรุณาอัปเดตโค้ดก่อนทดสอบส่งข้อมูลค่ะ");
                 return;
             }
 
             // เปลี่ยนปุ่มเป็นสถานะกำลังโหลด
-            const btn = document.querySelector('button.bg-emerald-500');
+            const btn = document.getElementById('btn-checkin');
             const originalText = btn.innerText;
-            btn.innerText = "กำลังบันทึก...";
+            btn.innerText = "กำลังบันทึกข้อมูล...";
             btn.disabled = true;
 
             // จัดเตรียมข้อมูลเพื่อส่งไปหลังบ้าน
             const data = {
-                name: "ทดสอบ ระบบ", // ชื่อชั่วคราวสำหรับทดสอบ
+                name: userName, // ส่งชื่อที่พิมพ์เข้ามา
                 location: workLocation,
                 task: taskDetail,
                 gps: gpsData
             };
 
-            // ส่งข้อมูลด้วย Fetch API
+            // ส่งข้อมูลไปยัง Google Sheets
             fetch(scriptURL, {
                 method: 'POST',
                 mode: 'no-cors', 
@@ -148,24 +178,23 @@
                 body: JSON.stringify(data)
             })
             .then(() => {
-                alert("บันทึกการลงชื่อเข้าปฏิบัติงานเรียบร้อยแล้ว!");
+                alert("บันทึกการลงชื่อเข้าปฏิบัติงานเรียบร้อยแล้วค่ะ!");
+                // รีเซ็ตฟอร์มให้กลับเป็นค่าเริ่มต้น
                 btn.innerText = originalText;
                 btn.disabled = false;
-                document.querySelector('textarea').value = ''; // เคลียร์กล่องข้อความ
+                document.getElementById('user-name').value = ''; 
+                document.getElementById('task-detail').value = ''; 
             })
             .catch(error => {
                 console.error('Error!', error.message);
-                alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
+                alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งค่ะ");
                 btn.innerText = originalText;
                 btn.disabled = false;
             });
         }
 
-        // 4. ผูกฟังก์ชันเข้ากับปุ่ม "เข้างาน (Check-in)"
-        const checkInBtn = document.querySelector('button.bg-emerald-500');
-        if(checkInBtn) {
-            checkInBtn.addEventListener('click', submitCheckIn);
-        }
+        // ผูกฟังก์ชันเข้ากับปุ่ม
+        document.getElementById('btn-checkin').addEventListener('click', submitCheckIn);
     </script>
 </body>
 </html>
